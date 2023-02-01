@@ -14,16 +14,6 @@ import orderRoutes from "./routes/orderRoutes.js";
 dotenv.config();
 connectPassport();
 
-mongoose.set("strictQuery", false);
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("Connected to DB.");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 const app = express();
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -65,4 +55,13 @@ app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => console.log(`Server is working on PORT ${PORT}`));
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server is working on PORT ${PORT}`));
+    console.log("Connected to DB.");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
