@@ -19,7 +19,6 @@ router.get(
 router.get(
   "/login",
   passport.authenticate("google", {
-    scope: ["profile"],
     successRedirect: process.env.FRONTEND_URL,
   }),
 
@@ -40,7 +39,11 @@ router.get("/logout", (req, res, next) => {
   req.session.destroy((err) => {
     if (err) next(err);
     else {
-      res.clearCookie("connect.sid");
+      res.clearCookie("connect.sid", {
+        secure: true,
+        httpOnly: true,
+        sameSite: "none",
+      });
       res.status(200).json({ message: "Logged out successfully!" });
     }
   });

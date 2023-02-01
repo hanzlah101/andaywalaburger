@@ -35,10 +35,9 @@ app.use(
     saveUninitialized: true,
 
     cookie: {
-      maxAge: 86400000,
-      secure: process.env.NODE_ENV === "development" ? false : true,
-      httpOnly: process.env.NODE_ENV === "development" ? false : true,
-      sameSite: process.env.NODE_ENV === "development" ? false : "none",
+      secure: true,
+      httpOnly: true,
+      sameSite: "none",
     },
   })
 );
@@ -66,8 +65,4 @@ app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () =>
-  console.log(
-    `Server is working on PORT: ${PORT}, in ${process.env.NODE_ENV} MODE`
-  )
-);
+app.listen(PORT, () => console.log(`Server is working on PORT ${PORT}`));
